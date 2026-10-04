@@ -161,3 +161,54 @@ void deleteNode(Node *&hd, int position) {
     }
     delete current;
 }
+
+void insertNode(Node *&hd, int position, float val) {
+    Node *newnode = new Node;
+    newnode->value = val;
+
+    if (position == 1) {
+        newnode->next = hd;
+        hd = newnode;
+        return;
+    }
+
+    Node *current = hd;
+    Node *prev = nullptr;
+
+    for (int i = 0; i < position - 1 && current; i++) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (!prev) {
+        // Position is out of bounds
+        delete newnode;
+        return;
+    }
+
+    prev->next = newnode;
+    newnode->next = current;
+}
+
+void deleteList(Node *&hd) {
+    Node *current = hd;
+    while (current) {
+        Node *nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }
+    hd = nullptr;
+}
+
+void printList(Node *hd) {
+    if (!hd) {
+        cout << "Empty list.\n";
+        return;
+    }
+    Node *current = hd;
+    while (current) {
+        cout << current->value << " -> ";
+        current = current->next;
+    }
+    cout << "nullptr\n";
+}

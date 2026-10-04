@@ -10,6 +10,18 @@ struct Node {
 
 void output(Node *);
 
+void addNodeFront(Node *&, float);
+
+void addNodeEnd(Node *&, float);
+
+void deleteNode(Node *&, int);
+
+void insertNode(Node *&, int, float);
+
+void deleteList(Node *&);
+
+void printList(Node *);
+
 int main() {
     Node *head = nullptr;
     int count = 0;
@@ -119,4 +131,33 @@ void output(Node *hd) {
         current = current->next;
     }
     cout << endl;
+}
+
+void addNodeFront(Node *&hd, float val) {
+    Node *newnode = new Node;
+    newnode->value = val;
+    newnode->next = hd;
+    hd = newnode;
+}
+
+void deleteNode(Node *&hd, int position) {
+    if (!hd) return; // List is empty
+
+    Node *current = hd;
+    Node *prev = nullptr;
+
+    for (int i = 0; i < position - 1 && current; i++) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (!current) return; // Position is out of bounds
+
+    if (prev == nullptr) {
+        // Deleting the head node
+        hd = current->next;
+    } else {
+        prev->next = current->next;
+    }
+    delete current;
 }
